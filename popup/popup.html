@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Gmail AI Assistant</title>
+   <meta charset="UTF-8">
+   <style>
+      :root {
+         --dark-red: #8B0000;
+         --light-red: #DC143C;
+         --off-white: #F5F5F5;
+      }
+
+      body {
+         width: 320px;
+         padding: 20px;
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+         background-color: var(--off-white);
+         margin: 0;
+         color: #333;
+      }
+
+      .container {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         gap: 20px;
+      }
+
+      h1 {
+         font-size: 1.5em;
+         color: var(--dark-red);
+         margin: 0;
+         text-align: center;
+      }
+
+      .status-message {
+         text-align: center;
+         line-height: 1.5;
+         font-size: 0.9em;
+      }
+
+      .sync-button {
+         background-color: var(--dark-red);
+         color: white;
+         border: none;
+         padding: 12px 24px;
+         border-radius: 25px;
+         cursor: pointer;
+         font-size: 1em;
+         transition: all 0.3s ease;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      }
+
+      .sync-button:hover {
+         background-color: var(--light-red);
+         transform: translateY(-2px);
+         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      }
+
+      .sync-button:disabled {
+         background-color: #999;
+         cursor: not-allowed;
+         transform: none;
+         box-shadow: none;
+      }
+
+      .loader {
+         display: none;
+         width: 24px;
+         height: 24px;
+         border: 3px solid var(--off-white);
+         border-top: 3px solid var(--dark-red);
+         border-radius: 50%;
+         animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+         0% { transform: rotate(0deg); }
+         100% { transform: rotate(360deg); }
+      }
+
+      .success-icon {
+         color: var(--dark-red);
+         font-size: 2em;
+         display: none;
+      }
+   </style>
+</head>
+<body>
+   <div class="container">
+      <h1>Gmail AI Assistant</h1>
+      <p class="status-message" id="statusMessage">
+         Ready to enhance your Gmail experience with AI-powered notifications
+      </p>
+      <div class="loader" id="loader"></div>
+      <div class="success-icon" id="successIcon">✓</div>
+      <button class="sync-button" id="syncButton">
+         Synchronize with Gmail
+      </button>
+   </div>
+   <script src="popup.js"></script>
+</body>
+</html>

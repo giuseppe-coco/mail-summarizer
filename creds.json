@@ -1,0 +1,5 @@
+{
+   "CHROME_EXTENSION_ID": "your_chrome_extension_id",
+   "OAUTH_CLIENT_ID": "your_oauth_client_id",
+   "OPENAI_API_KEY": "your_openai_api_key"
+}
