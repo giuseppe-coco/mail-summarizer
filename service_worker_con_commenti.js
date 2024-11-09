@@ -1,9 +1,9 @@
-// Message listener
+// Listener per i messaggi
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
    if (message.action === 'authenticationCompleted') {
       console.log('Authentication completed, starting email polling');
 
-      // Polling every minute
+      // Polling ogni minuto
       setInterval(async () => {
          try {
             const authResult = await chrome.identity.getAuthToken({ interactive: false });
@@ -44,13 +44,14 @@ async function checkEmailHistory(token) {
       `https://gmail.googleapis.com/gmail/v1/users/me/history?startHistoryId=${startHistoryId}`,
       init
    );
-   // If startHistoryId is too old
+   // Se lo startHistoryId è troppo vecchio
    if (response.status === 404) {
       console.log('History ID too old, retrieving latest historyId...');
       await chrome.storage.local.set({ historyId: await getStartHistoryId(token) });
    }
    else {
       const data = await response.json();
+      console.log("data = ", data)
       if (data.historyId)
          await chrome.storage.local.set({ historyId: data.historyId });
 
@@ -69,16 +70,17 @@ async function getStartHistoryId(token) {
          },
          'contentType': 'json'
       };
-      // Get a recent message from inbox
+      // Prendiamo un messaggio recente dalla inbox
       const response = await fetch(
          'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=1',
          init
       );
       const data = await response.json();
+      console.log("data = ", data)
       if (!data.messages || data.messages.length === 0)
          throw new Error('No messages found');
 
-      // Get message details to obtain historyId
+      // Prendiamo i dettagli del messaggio per ottenere l'historyId
       const messageId = data.messages[0].id;
       const messageResponse = await fetch(
          `https://gmail.googleapis.com/gmail/v1/users/me/messages/${messageId}`,
@@ -93,6 +95,7 @@ async function getStartHistoryId(token) {
 }
 
 async function processHistoryChanges(history, token) {
+   console.log("history = ", history)
    for (const record of history)
       if (record.messagesAdded) // check if it's a new message
          for (const message of record.messagesAdded)
@@ -112,6 +115,7 @@ async function processNewEmail(messageId, token) {
       );
 
       const emailData = await response.json();
+      console.log("emailData = ", emailData)
       if (NOT_IMPORTANT_EMAILS.some(str => emailData.labelIds.includes(str))) {
          console.log(`Email ${messageId} is not important, no notification for it`)
          return;
@@ -121,7 +125,7 @@ async function processNewEmail(messageId, token) {
       const from = headers.find(h => h.name === 'From').value;
       const subject = headers.find(h => h.name === 'Subject')?.value || '(no subject)';
 
-      // Extract email body
+      // Estrai il corpo dell'email
       let body = '';
       if (emailData.payload.parts) {
          const textPart = emailData.payload.parts.find(part => part.mimeType === 'text/plain');
@@ -182,7 +186,7 @@ async function summarizeWithGPT(emailBody) {
 }
 
 chrome.notifications.onClicked.addListener(async (notificationId) => {
-   // The notificationId is the message ID
+   // Il notificationId è l'ID del messaggio
    const gmailUrl = `https://mail.google.com/mail/u/0/#inbox/${notificationId}`;
    await chrome.tabs.create({ url: gmailUrl });
    await chrome.notifications.clear(notificationId);

@@ -4,13 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
    const loader = document.getElementById('loader');
    const successIcon = document.getElementById('successIcon');
 
-   // Check initial auth state
-   chrome.identity.getAuthToken({ interactive: false }, function(token) {
-      if (token) {
-         console.log("Sono qui")
-         runAuthenticationState();
-      }
-   });
+   chrome.identity.getAuthToken({ interactive: false })
+      .then(runAuthenticationState)
+      .catch(error => {console.log(error)});
 
    syncButton.addEventListener('click', async () => {
       // Show loading state
