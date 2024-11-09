@@ -23,8 +23,12 @@ You could disable Gmail notifications since once you click the Mail Summarizer A
 
 App is running! It notifies you with a notfication including summary every time an email arrives to your inbox.
 
-## Next Steps
+## Example
+![Home Page](screenshots/home-page.png)
+![Access granted](screenshots/access-granted.png)
+![Notifications](screenshots/notifications.png)
 
+## Next Steps
 ### Using Google Gemini Nano running on local browser for summarization
 This API is currently under experiments and it's not documented yet. 
 But if the question interest you, you could open an issue.
