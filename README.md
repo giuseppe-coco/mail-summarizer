@@ -5,7 +5,7 @@ The extension performs a single, clear function: it checks every few seconds if 
 You could disable Gmail notifications since once you click the Mail Summarizer AI notification, you will be redirected to the original email page.
 
 ## Installation
-- `git clone url`
+- `git clone https://github.com/giuseppe-coco/mail-summarizer.git`
 
 - Get a your_chrome_extension_id creating a new extension from https://chrome.google.com/webstore/devconsole/
 
