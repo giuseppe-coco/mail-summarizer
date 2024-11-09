@@ -1,4 +1,5 @@
 # Gmail Summarizer AI
+![Icon](icons\Mail-Summarizer-AI-logo.webp)
 
 If you, like me, are tired of receiving very long emails at work from clients or co-workers, then maybe this chrome extension is for you.
 The extension performs a single, clear function: it checks every few seconds if there are new incoming emails to your Gmail mail account and sends you a notification with a 150-character, AI-made summary.
